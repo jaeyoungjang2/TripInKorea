@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <link rel="stylesheet" href="./assets/styled.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Lobster&family=Work+Sans:wght@300&display=swap"
+            rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/b9dd3be533.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+    <title>Airtravel999</title>
+</head>
+
+
+<body>
+<!-- S: HEADER -->
+<section class="mypage-header">
+    <div class="mypage-nav">
+        <h1 class="mypage-logo"><a href="#">Airtravel</a></h1>
+        <ul class="mypage-utils">
+            <li>
+                <button type="button" class="btn js-home">Home</button>
+            </li>
+            <li>
+                <button type="button" class="btn js-logout">Logout</button>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- E: HEADER -->
+
+<!-- S: VISUAL AREA -->
+<div class="visual-wrap"></div>
+<!-- E: VISUAL AREA -->
+s
+<!-- S: CONTENTS -->
+<div class="contents-wrap">
+    <div class="posts-wrap">
+        <!-- S: Post Elem -->
+        <div class="post">
+            <div class="thumbnail">
+                <!-- <img src="./assets/images/@img-post1.jpg" alt="샌프란시스코"> -->
+            </div>
+            <div class="post-desc">
+                <strong class="post-location">샌프란시스코</strong>
+                <span class="">금문교</span>
+                <p class="post-detail ellipse">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
+                    excepturorem ipsumolor sit amet consectetur adipisicing elit. Est
+                    exceptuicing elit. Est exceptu
+                </p>
+            </div>
+        </div>
+        <!--E: Post Elem -->
+
+        <!-- S: Post Elem -->
+        <div class="mypage-contaioner">
+            <div class="post_mypage">
+                <div class="icon-contaioner">
+                    <i class="add-icon fas fa-plus js-addPost"></i>
+                </div>
+            </div>
+        </div>
+        <!-- E: Post Elem -->
+
+    </div>
+</div>
+<!-- E: CONTENTS -->
+
+
+<!-- S: 게시물 추가 모달 -->
+<div id="addPost" class="modal-bg">
+    <!-- S: Modal Container -->
+    <div class="modal-container">
+        <!-- S: Modal Header -->
+        <div class="modal-header">
+            <h5 class="modal-title">Create Post</h5>
+            <button type="button" class="btn-close">닫기</button>
+        </div>
+
+        <!-- S: Modal Body -->
+        <div class="modal-body modal-addpost" style="padding-bottom: 30px">
+            <div class="thumbnail-area">이미지 영역</div>
+            <div class="form form-file js-form-file">
+                <label for="input-file" class="input-file">파일 선택</label>
+                <input id="input-file" type="file" required/>
+            </div>
+            <p class="form__alert-msg">여행사진을 첨부해주세요!</p>
+            <div class="options-wrap">
+                <select name="" id="modal_location">
+                    <option value="" disabled selected>여행지</option>
+                    <option value="여행자1">여행지1</option>
+                    <option value="여행자2">여행지2</option>
+                    <option value="여행자3">여행지3</option>
+                </select>
+                <select name="" id="modal_continent">
+                    <option value="" disabled selected>대륙</option>
+                    <option value="대륙1">대륙1</option>
+                    <option value="대륙2">대륙2</option>
+                    <option value="대륙3">대륙3</option>
+                </select>
+                <select name="" id="modal_date">
+                    <option value="날짜" selected>날짜</option>
+                </select>
+            </div>
+            <textarea name="" id="addPostTextarea" rows="10">
+ 내용을 입력하세요.</textarea>
+        </div>
+
+        <!-- S: Modal Footer -->
+        <div class="modal-footer">
+            <button class="btn btn-light">취소</button>
+            <button onclick="test()" class="btn btn-primary formcheck">
+                추가
+            </button>
+        </div>
+    </div>
+    <!-- E: Modal Container -->
+</div>
+<!-- E: 게시물 추가 모달 -->
+<script src="./assets/js/front_ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
+<!-- 추후 삭제할 것 -->
+<script>
+    function test() {
+        let userLocation = $("#modal_location").val();
+        let userContinent = $("#modal_continent").val();
+        let userDate = $("#modal_date").val();
+        let userTextArea = $("#addPostTextarea").val();
+
+        window.location.reload();
+
+        console.log(userLocation, userContinent, userDate, userTextArea);
+    }
+
+    let mypage_post = $(".post").val();
+
+    let temphtml = `<div class="mypage-createmodal-body">
+                      <div class="mypage-createmodal">
+                        <a href="#" class="icon">
+                          <i class="far fa-plus-square js-addPost"></i>
+                        </a>
+                      </div>
+                    </div>`;
+
+    $(document).ready(function () {
+        $(".post-wrap").prepend(temphtml);
+    });
+
+    //공통 form 검증 함수
+    const empty__inputs = (inputs) =>
+        inputs.map((item, idx) => {
+            item.value.length === 0
+                ? item.parentNode.classList.add("empty-input")
+                : item.parentNode.classList.remove("empty-input");
+        });
+
+    //S:게시물 추가 모달
+    const addPost = document.querySelector(".js-addPost");
+    const addPost_background = document.querySelector("#addPost.modal-bg");
+    const modal_closeAddPost = document.querySelector("#addPost .btn-close");
+    const AddPost_formcheck = document.querySelector("#loginModal .btn.formcheck");
+
+    addPost.addEventListener("click", () => {
+        addPost_background.classList.toggle("show");
+    });
+
+    modal_closeAddPost.addEventListener("click", () => {
+        addPost_background.classList.remove("show");
+    });
+
+    // AddPost_formcheck.addEventListener("click", () => {
+    //const inputs = document.querySelectorAll(".modal-login .form  input");
+    //empty__inputs(inputs);
+    //});
+
+</script>
+</body>
+
+</html>
