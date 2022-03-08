@@ -4,6 +4,7 @@
 <head>
     <title>Clamorphism Login form</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,7 +13,7 @@
         function login() {
             let user_id = $("#id").val()
             let user_password = $("#password").val()
-
+            console.log("console, login post")
             $.ajax({
                     type: "POST",
                     url: "/",
@@ -21,6 +22,10 @@
                         userpassword_give: user_password
                     },
                     success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], {path: '/'});
+                            window.location.replace("/")
+                        }
                     }
                 });
         }
@@ -52,6 +57,7 @@
 <!--                <input type="checkbox"> Remember me-->
             </label>
 
+            <h3> {{ err }} </h3>
             <div class="inputBox2">
                 <div class="box2">
                     <input type="button" value="Log in" onclick="login()">
