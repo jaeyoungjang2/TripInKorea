@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<!--    {% if title %}-->
-    <h1>{{ title }}</h1>
-<!--    {% endif %}-->
+            {% if user_info %}
+    <a href="/user/{{ user_info.username }}"><span>{{ user_info.username }}</span></a>
+            {% endif %}
 </body>
 </html>

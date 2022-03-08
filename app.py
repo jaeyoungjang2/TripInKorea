@@ -16,13 +16,31 @@ import certifi
 
 ca = certifi.where()
 
-client = MongoClient()
+client = MongoClient('mongodb+srv://test:sparta@cluster0.oi7ny.mongodb.net/cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
 @app.route('/home', methods=['GET'])
 def home_get():
     title = "HI"
-    return render_template("home.html", title = title)
+    user_info = db.tripinkorea.find_one({"userid": "test"})
+    return render_template("home.html", user_info = user_info)
+
+@app.route('/user/<username>', methods=['GET'])
+def user_get(username):
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        userid = payload["id"]
+        docs = list(db.doc.find({'userid': userid}, {'_id': False}))
+        return render_template("user.html", docs=docs, username=username)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+
+
 
 @app.route('/', methods=['GET'])
 def signin_get():
