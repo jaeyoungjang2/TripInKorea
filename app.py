@@ -1,3 +1,4 @@
+#app.py
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -50,7 +51,6 @@ def signin_post():
 
     # 회원 정보가 db에 존재하지 않을 경우
     if result is None:
-        err = '아이디/비밀번호가 일치하지 않습니다.'
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
     # 회원 정보가 db에 존재할 경우
@@ -75,7 +75,6 @@ def createAccount_post():
         "userpassword" : pw_hash,
         "username" : username_receive
     }
-
     db.tripinkorea.insert_one(doc)
     return jsonify({'result': 'success'})
 
@@ -87,7 +86,7 @@ def createAccount_get():
 @app.route('/members/new/check_dup', methods=['POST'])
 def check_duplicate_userId():
     userid_receive = request.form['userid_give']
-    exists = bool(db.users.find_one({"username": userid_receive}))
+    exists = bool(db.tripinkorea.find_one({"userid": userid_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
 
