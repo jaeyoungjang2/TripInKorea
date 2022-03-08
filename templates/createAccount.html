@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Clamorphism Login form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+
+<body>
+    <div class="container">
+        <form th:object="${loginForm}" method="post" action="/">
+            <h3>Log in</h3>
+            <div class="inputBox">
+                <span>Username</span>
+                <div class="box">
+                    <div class="icon"><ion-icon name="person"></ion-icon></div>
+                    <input type="text" id="id">
+                </div>
+            </div>
+
+            <div class="inputBox">
+                <span>Password</span>
+                <div class="box">
+                    <div class="icon"><ion-icon name="lock-closed"></ion-icon></div>
+                    <input type="password" id="password">
+                </div>
+            </div>
+
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+
+            <div class="inputBox">
+                <div class="box">
+                    <input type="submit" value="Log in">
+                </div>
+            </div>
+
+            <ion-icon class="separate-icon" name="lock-closed"></ion-icon><a href="#" class="forgot">Forget Password</a><br>
+            <ion-icon class="separate-icon" name="person"></ion-icon><a href="members/new" class="forgot">Create Account</a>
+
+        </form>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
