@@ -28,8 +28,7 @@
 
         function check_dup() {
             let input_id = $("#input-id").val()
-            console.log("HI")
-            console.log(input_id)
+
             if (input_id == "") {
                 $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-id").focus()
@@ -65,28 +64,28 @@
             if (input_password == "") {
                 $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password").focus()
-                return;
+                return false;
             } else if (!check_password_regex(input_password)) {
                 $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                 $("#input-password").focus()
-                return;
-            } else {
-                $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
+                return false;
             }
+            $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
+            return true;
         }
 
         function checkPasswordMatch(input_password2, input_password) {
             if (input_password2 == "") {
                 $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
-                return;
+                return false;
             } else if (input_password2 != input_password) {
                 $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-password2").focus()
-                return;
-            } else {
-                $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
+                return false;
             }
+            $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
+            return true;
         }
 
         function sign_up() {
@@ -94,7 +93,6 @@
             let input_password = $("#input-password").val();
             let input_password2 = $("#input-password2").val();
             let input_username = $("#input-username").val();
-            console.log(input_id, input_password, input_username)
 
             if ($("#help-id").hasClass("is-danger")) {
                 alert("아이디를 다시 확인해주세요.")
@@ -104,8 +102,10 @@
                 return;
             }
 
-            checkPassword(input_password);
-            checkPasswordMatch(input_password2, input_password);
+            if (!checkPassword(input_password) || !checkPasswordMatch(input_password2, input_password)) {
+                return;
+            }
+
             $.ajax({
                 type: "POST",
                 url: "/members/new",
