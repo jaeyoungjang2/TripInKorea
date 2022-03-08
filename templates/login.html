@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Clamorphism Login form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function login() {
+            let user_id = $("#id").val()
+            let user_password = $("#password").val()
+            console.log("console, login post")
+            $.ajax({
+                    type: "POST",
+                    url: "/",
+                    data: {
+                        userid_give: user_id,
+                        userpassword_give: user_password
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], {path: '/'});
+                            window.location.replace("/")
+                        }
+                    }
+                });
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="container2">
+        <form>
+            <h3>Log in</h3>
+            <div class="inputBox2">
+                <span>ID</span>
+                <div class="box2">
+                    <div class="icon"><ion-icon name="person"></ion-icon></div>
+                    <input type="text" id="id">
+                </div>
+            </div>
+
+            <div class="inputBox2">
+                <span>Password</span>
+                <div class="box2">
+                    <div class="icon"><ion-icon name="lock-closed"></ion-icon></div>
+                    <input type="password" id="password">
+                </div>
+            </div>
+
+            <label>
+<!--                <input type="checkbox"> Remember me-->
+            </label>
+
+            <h3> {{ err }} </h3>
+            <div class="inputBox2">
+                <div class="box2">
+                    <input type="button" value="Log in" onclick="login()">
+                </div>
+            </div>
+
+<!--            <ion-icon class="separate-icon" name="lock-closed"></ion-icon><a href="#" class="forgot">Forget Password</a><br>-->
+            <ion-icon class="separate-icon" name="person"></ion-icon><a href="members/new" class="forgot">Create Account</a>
+
+        </form>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
